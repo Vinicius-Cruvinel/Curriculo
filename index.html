@@ -879,9 +879,10 @@ function getCardCandidate(progressT) {
 
 // ── SCROLL STATE ──
 let scrollT = 0, targetT = 0;
+const SCROLL_SPEED = 1.3;
 window.addEventListener('scroll', () => {
   const max = document.documentElement.scrollHeight - window.innerHeight;
-  targetT = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
+  targetT = max > 0 ? Math.min((window.scrollY / max) * SCROLL_SPEED, 1) : 0;
 }, { passive:true });
 
 // ── HUD REFS ──
