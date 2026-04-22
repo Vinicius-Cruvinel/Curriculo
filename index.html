@@ -912,19 +912,9 @@ const lookSmooth = new THREE.Vector3(0, 0, 0);
 const lookTarget = new THREE.Vector3();
 const camSmooth = curve.getPointAt(0).clone();
 
-// ── MOUSE PARALLAX ──
-let mx = 0, my = 0;
-window.addEventListener('mousemove', e => {
-  mx = (e.clientX / window.innerWidth - 0.5) * 2;
-  my = (e.clientY / window.innerHeight - 0.5) * 2;
-}, {passive:true});
-
 // ── RENDER LOOP ──
-const clock = new THREE.Clock();
-
 function animate() {
   requestAnimationFrame(animate);
-  const elapsed = clock.getElapsedTime();
 
   // Smooth scroll — gentle lerp so motion feels gliding not snappy
   scrollT += (targetT - scrollT) * 0.038;
@@ -933,15 +923,12 @@ function animate() {
   // Camera along spline with arc-length mapping for near-constant speed.
   const camPos = curve.getPointAt(t);
 
-  // Extremely subtle drift only on X — no vertical movement at all
-  const driftX = Math.sin(elapsed * 0.18) * 6;
-
   // Smooth camera movement to remove path jolts between segments.
   camSmooth.lerp(camPos, 0.1);
 
-  // Mouse parallax: X only, very gentle
+  // Lock horizontal camera offset to avoid side-to-side movement.
   camera.position.set(
-    camSmooth.x + mx * 30 + driftX,
+    camSmooth.x,
     camSmooth.y,
     camSmooth.z
   );
