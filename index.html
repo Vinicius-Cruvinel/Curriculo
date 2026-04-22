@@ -916,8 +916,9 @@ const camSmooth = curve.getPointAt(0).clone();
 function animate() {
   requestAnimationFrame(animate);
 
-  // Smooth scroll — gentle lerp so motion feels gliding not snappy
+  // Smooth scroll with snap-to-target to avoid residual drifting at rest.
   scrollT += (targetT - scrollT) * 0.038;
+  if (Math.abs(targetT - scrollT) < 0.00002) scrollT = targetT;
   const t = Math.min(scrollT, 1);
 
   // Camera along spline with arc-length mapping for near-constant speed.
