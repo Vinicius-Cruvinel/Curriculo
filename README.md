@@ -18,7 +18,7 @@ O arquivo `Solar.html` contem uma experiencia interativa com:
 └── Solar.html
 ```
 
-## Como executar
+## Como executar localmente
 
 Voce pode abrir direto no navegador, mas o ideal e rodar via servidor local:
 
